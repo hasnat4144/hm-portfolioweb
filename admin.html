@@ -270,9 +270,10 @@
                         <div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">
                             <strong style="color:#fff; font-size:1.05rem;">Identity: ${m.name} [Mail Link: ${m.email}]</strong>
                             <small style="color:var(--accent-cyan); font-family:monospace;">${m.timestamp}</small>
-                            <small style="color:var(--accent-cyan); font-family:monospace;">${m.Contact}</small>
                         </div>
                         <p style="color:#9ca3af; font-size:0.95rem; line-height:1.5;">${m.msg}</p>
+                        <button class="btn-delete" style="margin-top:14px;" onclick="deleteItemNode('hm_inbox', ${m.id})"><i class="fas fa-trash"></i> Wipe Message Node Block</button>
+                     <p style="color:#9ca3af; font-size:0.95rem; line-height:1.5;">${m.contact}</p>
                         <button class="btn-delete" style="margin-top:14px;" onclick="deleteItemNode('hm_inbox', ${m.id})"><i class="fas fa-trash"></i> Wipe Message Node Block</button>
                     </div>`;
             });
