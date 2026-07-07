@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HM Digital Work - Data Migration Engine</title>
+    <style>
+        body { background: #060913; color: #fff; font-family: sans-serif; padding: 40px; text-align: center; }
+        .btn { padding: 15px 30px; background: #06b6d4; border: none; color: #060913; font-weight: bold; font-size: 1.1rem; border-radius: 8px; cursor: pointer; margin-top: 20px; }
+        #status { margin-top: 30px; color: #9ca3af; line-height: 1.8; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto; }
+    </style>
+</head>
+<body>
+
+    <h2>HM Digital Work - Database Migration</h2>
+    <p>Yeh script aapke purane LocalStorage ke saare reviews, skills, aur projects ko automatic live Firebase cloud par shift kar degi.</p>
+    
+    <button class="btn" id="start-migration">Start Cloud Migration</button>
+    <div id="status"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // ⚠️ Apni Firebase config details yahan lagayein:
+      const firebaseConfig = {
+    apiKey: "AIzaSyCkMGYy-98dvqEJo0wo5j0EwM6tn4pJIeQ",
+    authDomain: "hmdigitalwork-90a17.firebaseapp.com",
+    projectId: "hmdigitalwork-90a17",
+    storageBucket: "hmdigitalwork-90a17.firebasestorage.app",
+    messagingSenderId: "536158019817",
+    appId: "1:536158019817:web:c7a1114287f09b7110d078"
+  };
+
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        document.getElementById('start-migration').addEventListener('click', async () => {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = "Retrieving local memory blocks...<br>";
+
+            // 1. Migrate Skills
+            const localSkills = JSON.parse(localStorage.getItem('hm_skills') || '[]');
+            statusDiv.innerHTML += `Found ${localSkills.length} skills in local memory.<br>`;
+            for(let sk of localSkills) {
+                await addDoc(collection(db, "hm_skills"), { name: sk.name, level: parseInt(sk.level) });
+            }
+            if(localSkills.length > 0) statusDiv.innerHTML += "✅ Skills successfully migrated to Firestore.<br>";
+
+            // 2. Migrate Projects
+            const localProjects = JSON.parse(localStorage.getItem('hm_projects') || '[]');
+            statusDiv.innerHTML += `Found ${localProjects.length} projects in local memory.<br>`;
+            for(let p of localProjects) {
+                await addDoc(collection(db, "hm_projects"), { title: p.title, cat: p.cat || 'General Engineering Node', desc: p.desc });
+            }
+            if(localProjects.length > 0) statusDiv.innerHTML += "✅ Projects successfully migrated to Firestore.<br>";
+
+            // 3. Migrate Certificates
+            const localCerts = JSON.parse(localStorage.getItem('hm_certs') || '[]');
+            statusDiv.innerHTML += `Found ${localCerts.length} certificates in local memory.<br>`;
+            for(let c of localCerts) {
+                await addDoc(collection(db, "hm_certs"), { title: c.title, platform: c.platform });
+            }
+            if(localCerts.length > 0) statusDiv.innerHTML += "✅ Certificates successfully migrated to Firestore.<br>";
+
+            // 4. Migrate Reviews
+            const localReviews = JSON.parse(localStorage.getItem('hm_reviews') || '[]');
+            statusDiv.innerHTML += `Found ${localReviews.length} reviews in local memory.<br>`;
+            for(let r of localReviews) {
+                await addDoc(collection(db, "hm_reviews"), { name: r.name, role: r.role || 'Enterprise Partner Member', txt: r.txt });
+            }
+            if(localReviews.length > 0) statusDiv.innerHTML += "✅ Reviews successfully migrated to Firestore.<br>";
+
+            statusDiv.innerHTML += "<br><strong>🚀 Migration Completed! Ab aap apni website check kar sakte hain, saara data fast load ho jayega.</strong>";
+        });
+    </script>
+</body>
+</html>
