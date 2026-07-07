@@ -201,7 +201,7 @@ function initContactSystem() {
         inbox.push({ id: Date.now(), name, email, msg, timestamp: new Date().toLocaleString() });
         localStorage.setItem('hm_inbox', JSON.stringify(inbox));
 
-        alert('Transmission Matrix Complete. Message Log Injected Into Secure Admin Panel.');
+        alert('Your request has been received.THANK YOU.....');
         form.reset();
     });
 }
