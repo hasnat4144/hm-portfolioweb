@@ -62,33 +62,29 @@
 </head>
 <body>
 
-    <!-- SECURE VALIDATION PASS SYSTEM INTERLOCK -->
     <div id="auth-lock-screen">
         <div style="max-width:400px; width:100%; background:var(--panel-surface); border:1px solid var(--border); padding:35px; border-radius:16px; text-align:center;">
             <i class="fas fa-shield-half-stroke" style="font-size:3rem; color:var(--accent-cyan); margin-bottom:20px;"></i>
             <h2 style="color:#fff; margin-bottom:8px;">Access Key Required</h2>
             <p style="color:#9ca3af; font-size:0.9rem; margin-bottom:24px;">Provide the secure matrix token passphrase key to manage operations.</p>
             <input type="password" id="secret-pass-key-input" placeholder="Enter System Secret Key Axis..." style="text-align:center; margin-bottom:20px;">
-            <button class="btn-action" style="width:100%;" onclick="validateIdentityKey()">Unlock Admin Panel</button>
+            <button class="btn-action" style="width:100%;" id="unlock-btn-trigger">Unlock Admin Panel</button>
         </div>
     </div>
 
-    <!-- MAIN SIDEBAR OPERATIONS CONSOLE -->
     <div class="admin-sidebar">
         <h2 style="color:#fff; font-size:1.15rem; font-weight:800; margin-bottom:30px;"><i class="fas fa-sliders-h" style="color:var(--accent-cyan); margin-right:8px;"></i> System Master</h2>
-        <div class="admin-nav-item active" onclick="switchView('dashboard-view', this)"><i class="fas fa-chart-pie"></i> Metrics Dashboard</div>
-        <div class="admin-nav-item" onclick="switchView('skills-view', this)"><i class="fas fa-brain"></i> Manage Skills</div>
-        <div class="admin-nav-item" onclick="switchView('projects-view', this)"><i class="fas fa-layer-group"></i> Manage Projects</div>
-        <div class="admin-nav-item" onclick="switchView('certs-view', this)"><i class="fas fa-award"></i> Certificates Storage</div>
-        <div class="admin-nav-item" onclick="switchView('reviews-view', this)"><i class="fas fa-comment-dots"></i> Client Reviews</div>
-        <div class="admin-nav-item" onclick="switchView('socials-view', this)"><i class="fas fa-link"></i> Core Router Links</div>
-        <div class="admin-nav-item" onclick="switchView('inbox-view', this)"><i class="fas fa-inbox"></i> Signal Inbox</div>
+        <div class="admin-nav-item active" data-target="dashboard-view"><i class="fas fa-chart-pie"></i> Metrics Dashboard</div>
+        <div class="admin-nav-item" data-target="skills-view"><i class="fas fa-brain"></i> Manage Skills</div>
+        <div class="admin-nav-item" data-target="projects-view"><i class="fas fa-layer-group"></i> Manage Projects</div>
+        <div class="admin-nav-item" data-target="certs-view"><i class="fas fa-award"></i> Certificates Storage</div>
+        <div class="admin-nav-item" data-target="reviews-view"><i class="fas fa-comment-dots"></i> Client Reviews</div>
+        <div class="admin-nav-item" data-target="socials-view"><i class="fas fa-link"></i> Core Router Links</div>
+        <div class="admin-nav-item" data-target="inbox-view"><i class="fas fa-inbox"></i> Signal Inbox</div>
     </div>
 
-    <!-- MAIN INTERACTIVE ACTIVE SCREEN MUX WORKSPACE -->
     <div class="main-workspace">
         
-        <!-- DASHBOARD ANALYTICS OVERVIEW -->
         <div id="dashboard-view" class="panel-view active">
             <h1 style="margin-bottom:25px; font-weight:800;">Metrics Console Dashboard</h1>
             <div class="stats-grid-row">
@@ -99,13 +95,12 @@
             <p style="color: #9ca3af; line-height:1.6;">Welcome back! Use the sidebar navigation targets to add, view, update, or clear items out of the system architecture memory pipeline instantly.</p>
         </div>
 
-        <!-- MANAGE SKILLS PANEL VIEW -->
         <div id="skills-view" class="panel-view">
             <h1 style="margin-bottom:25px;">Manage Skill Assets Matrix</h1>
             <div class="form-inline-matrix">
                 <div><label style="font-size:0.85rem; display:block; margin-bottom:6px;">Skill Metric Name</label><input type="text" id="sk-name"></div>
                 <div><label style="font-size:0.85rem; display:block; margin-bottom:6px;">Proficiency Percentage (0-100)</label><input type="number" id="sk-level" min="0" max="100"></div>
-                <button class="btn-action" onclick="addSkillNode()">Inject Skill</button>
+                <button class="btn-action" id="add-skill-btn">Inject Skill</button>
             </div>
             <div class="data-table-container">
                 <table class="data-table">
@@ -115,14 +110,13 @@
             </div>
         </div>
 
-        <!-- PROJECTS NODE MANAGER VIEW -->
         <div id="projects-view" class="panel-view">
             <h1 style="margin-bottom:25px;">Manage Code Project Matrices</h1>
             <div class="form-inline-matrix">
                 <div><label style="font-size:0.85rem; display:block; margin-bottom:6px;">Project Title</label><input type="text" id="p-title"></div>
                 <div><label style="font-size:0.85rem; display:block; margin-bottom:6px;">Category Badge</label><input type="text" id="p-cat"></div>
                 <div><label style="font-size:0.85rem; display:block; margin-bottom:6px;">Description Profile Text</label><input type="text" id="p-desc"></div>
-                <button class="btn-action" onclick="addProjectNode()">Inject Project</button>
+                <button class="btn-action" id="add-project-btn">Inject Project</button>
             </div>
             <div class="data-table-container">
                 <table class="data-table">
@@ -132,13 +126,12 @@
             </div>
         </div>
 
-        <!-- CERTIFICATE MEMORY CONTROLLER -->
         <div id="certs-view" class="panel-view">
             <h1 style="margin-bottom:25px;">Manage Verifiable Certificates Repository</h1>
             <div class="form-inline-matrix">
                 <div><label style="font-size:0.85rem; display:block; margin-bottom:6px;">Certificate Name</label><input type="text" id="c-title"></div>
                 <div><label style="font-size:0.85rem; display:block; margin-bottom:6px;">Issuing Platform Entity</label><input type="text" id="c-platform"></div>
-                <button class="btn-action" onclick="addCertNode()">Inject Archive</button>
+                <button class="btn-action" id="add-cert-btn">Inject Archive</button>
             </div>
             <div class="data-table-container">
                 <table class="data-table">
@@ -148,14 +141,13 @@
             </div>
         </div>
 
-        <!-- CLIENT REVIEWS NODE CONTROL PANEL -->
         <div id="reviews-view" class="panel-view">
             <h1 style="margin-bottom:25px;">Manage Endorsement Reviews</h1>
             <div class="form-inline-matrix">
                 <div><label style="font-size:0.85rem; display:block; margin-bottom:6px;">Client Name / Entity</label><input type="text" id="r-name"></div>
                 <div><label style="font-size:0.85rem; display:block; margin-bottom:6px;">Designation Corporate Title</label><input type="text" id="r-role"></div>
                 <div><label style="font-size:0.85rem; display:block; margin-bottom:6px;">Review Testimony Statements</label><input type="text" id="r-txt"></div>
-                <button class="btn-action" onclick="addReviewNode()">Inject Feedback</button>
+                <button class="btn-action" id="add-review-btn">Inject Feedback</button>
             </div>
             <div class="data-table-container">
                 <table class="data-table">
@@ -165,7 +157,6 @@
             </div>
         </div>
 
-        <!-- SYSTEM SOCIAL INTERFACES DATA LINKS -->
         <div id="socials-view" class="panel-view">
             <h1 style="margin-bottom:25px;">Core Route Global Redirect Interfaces Links (Includes WhatsApp Link Sync)</h1>
             <div class="data-table-container">
@@ -176,7 +167,6 @@
             </div>
         </div>
 
-        <!-- INCOMING MESSAGE DISPATCH INBOX LOGGER -->
         <div id="inbox-view" class="panel-view">
             <h1 style="margin-bottom:25px;">Incoming Signal Transmission Box logs</h1>
             <div id="inbox-cards-wrapper"></div>
@@ -184,13 +174,33 @@
 
     </div>
 
-    <script>
-        // CONFIGURABLE SYSTEM TOKEN KEY LOCK PARAMETER:
-        const CONTROL_SYSTEM_PASSPHRASE_KEY = "HM-MATRIX-2026";
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+        // ⚠️ HINT: Yahan apne Firebase Console se milne wali web app config details lagayein
+         const firebaseConfig = {
+    apiKey: "AIzaSyCkMGYy-98dvqEJo0wo5j0EwM6tn4pJIeQ",
+    authDomain: "hmdigitalwork-90a17.firebaseapp.com",
+    projectId: "hmdigitalwork-90a17",
+    storageBucket: "hmdigitalwork-90a17.firebasestorage.app",
+    messagingSenderId: "536158019817",
+    appId: "1:536158019817:web:c7a1114287f09b7110d078"
+  };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const CONTROL_SYSTEM_PASSPHRASE_KEY = "HM-MATRIX-2026";
+        let isEngineUnlocked = false;
+
+        // Check verification on load
+        document.getElementById('unlock-btn-trigger').addEventListener('click', validateIdentityKey);
+        
         function validateIdentityKey() {
             const inputVal = document.getElementById('secret-pass-key-input').value.trim();
             if (inputVal === CONTROL_SYSTEM_PASSPHRASE_KEY) {
+                isEngineUnlocked = true;
                 document.getElementById('auth-lock-screen').style.display = 'none';
                 renderAllAdminTables();
             } else {
@@ -198,147 +208,184 @@
             }
         }
 
-        function switchView(viewId, el) {
-            document.querySelectorAll('.panel-view').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.admin-nav-item').forEach(i => i.classList.remove('active'));
-            document.getElementById(viewId).classList.add('active');
-            el.classList.add('active');
-            renderAllAdminTables();
-        }
+        // Setup Sidebar Views Navigation Links Mux Logic
+        const navItems = document.querySelectorAll('.admin-nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetViewId = item.getAttribute('data-target');
+                document.querySelectorAll('.panel-view').forEach(p => p.classList.remove('active'));
+                navItems.forEach(i => i.classList.remove('active'));
+                
+                document.getElementById(targetViewId).classList.add('active');
+                item.classList.add('active');
+                if(isEngineUnlocked) renderAllAdminTables();
+            });
+        });
 
-        function renderAllAdminTables() {
-            // Stats Badge Updater Matrix Logic
+        // ====== SYSTEM CONTROLLER RENDER INTERFACES ======
+        async function renderAllAdminTables() {
+            // Read visitor logs count from browser internal frame
             const vLogs = localStorage.getItem('hm_visitor_logs') || '142';
-            const mLogs = JSON.parse(localStorage.getItem('hm_inbox') || '[]');
-            const pLogs = JSON.parse(localStorage.getItem('hm_projects') || '[]');
-            
             document.getElementById('sb-visitors').textContent = vLogs;
-            document.getElementById('sb-messages').textContent = mLogs.length.toString();
-            document.getElementById('sb-projects').textContent = pLogs.length.toString();
 
-            // Render Skills Node Row Output
-            const skills = JSON.parse(localStorage.getItem('hm_skills') || '[]');
-            const skBody = document.getElementById('skills-table-body');
-            skBody.innerHTML = '';
-            skills.forEach(s => {
-                skBody.innerHTML += `<tr><td><strong>${s.name}</strong></td><td>${s.level}%</td>
-                <td><button class="btn-delete" onclick="deleteItemNode('hm_skills', ${s.id})">Drop Node</button></td></tr>`;
-            });
+            try {
+                // 1. Fetch Inbox & Sync Counters
+                const inboxSnapshot = await getDocs(collection(db, "hm_inbox"));
+                document.getElementById('sb-messages').textContent = inboxSnapshot.size.toString();
 
-            // Render Projects List Row Output
-            const pBody = document.getElementById('projects-table-body');
-            pBody.innerHTML = '';
-            pLogs.forEach(p => {
-                pBody.innerHTML += `<tr><td><strong>${p.title}</strong></td><td><span style="color:var(--accent-cyan);">${p.cat}</span></td><td>${p.desc}</td>
-                <td><button class="btn-delete" onclick="deleteItemNode('hm_projects', ${p.id})">Drop Node</button></td></tr>`;
-            });
+                const inboxWrapper = document.getElementById('inbox-cards-wrapper');
+                inboxWrapper.innerHTML = inboxSnapshot.empty ? '<p style="color:#9ca3af; font-size:0.95rem;">No signals received within transmission memory loops.</p>' : '';
+                
+                inboxSnapshot.forEach(docSnap => {
+                    const m = docSnap.data();
+                    inboxWrapper.innerHTML += `
+                        <div class="inbox-card-node">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">
+                                <strong style="color:#fff; font-size:1.05rem;">Identity: ${m.name} [Mail Link: ${m.email}]</strong>
+                                <small style="color:var(--accent-cyan); font-family:monospace;">${m.timestamp}</small>
+                            </div>
+                            <p style="color:#9ca3af; font-size:0.95rem; line-height:1.5;">${m.msg}</p>
+                            <p style="color:#00d4ff; font-size:0.95rem; line-height:1.5; margin-top:10px;"><i class="fas fa-phone"></i> ${m.contact || 'N/A'}</p>
+                            <button class="btn-delete" style="margin-top:14px;" data-id="${docSnap.id}" data-col="hm_inbox"><i class="fas fa-trash"></i> Wipe Message Node Block</button>
+                        </div>`;
+                });
 
-            // Render Certificates List Row Output
-            const certs = JSON.parse(localStorage.getItem('hm_certs') || '[]');
-            const cBody = document.getElementById('certs-table-body');
-            cBody.innerHTML = '';
-            certs.forEach(c => {
-                cBody.innerHTML += `<tr><td><strong>${c.title}</strong></td><td>${c.platform}</td>
-                <td><button class="btn-delete" onclick="deleteItemNode('hm_certs', ${c.id})">Drop Node</button></td></tr>`;
-            });
+                // 2. Fetch Skills
+                const skillsSnapshot = await getDocs(collection(db, "hm_skills"));
+                const skBody = document.getElementById('skills-table-body');
+                skBody.innerHTML = '';
+                skillsSnapshot.forEach(docSnap => {
+                    const s = docSnap.data();
+                    skBody.innerHTML += `<tr><td><strong>${s.name}</strong></td><td>${s.level}%</td>
+                    <td><button class="btn-delete" data-id="${docSnap.id}" data-col="hm_skills">Drop Node</button></td></tr>`;
+                });
 
-            // Render Testimonials List Row Output
-            const reviews = JSON.parse(localStorage.getItem('hm_reviews') || '[]');
-            const rBody = document.getElementById('reviews-table-body');
-            rBody.innerHTML = '';
-            reviews.forEach(r => {
-                rBody.innerHTML += `<tr><td><strong>${r.name}</strong></td><td>${r.role}</td><td>${r.txt}</td>
-                <td><button class="btn-delete" onclick="deleteItemNode('hm_reviews', ${r.id})">Drop Node</button></td></tr>`;
-            });
+                // 3. Fetch Projects
+                const projectsSnapshot = await getDocs(collection(db, "hm_projects"));
+                document.getElementById('sb-projects').textContent = projectsSnapshot.size.toString();
+                const pBody = document.getElementById('projects-table-body');
+                pBody.innerHTML = '';
+                projectsSnapshot.forEach(docSnap => {
+                    const p = docSnap.data();
+                    pBody.innerHTML += `<tr><td><strong>${p.title}</strong></td><td><span style="color:var(--accent-cyan);">${p.cat}</span></td><td>${p.desc}</td>
+                    <td><button class="btn-delete" data-id="${docSnap.id}" data-col="hm_projects">Drop Node</button></td></tr>`;
+                });
 
-            // Render Social Interactive Mapping
-            const socials = JSON.parse(localStorage.getItem('hm_socials') || '[]');
-            const sBody = document.getElementById('socials-table-body');
-            sBody.innerHTML = '';
-            socials.forEach(s => {
-                sBody.innerHTML += `<tr><td><strong>${s.platform} Base</strong></td>
-                <td><input type="text" value="${s.url}" onchange="updateSocialLinkAxis(${s.id}, this.value)" style="width:95%;"></td>
-                <td><span style="color:var(--accent-cyan); font-size:0.8rem; font-weight:700;"><i class="fas fa-check-circle"></i> Integrated Sync</span></td></tr>`;
-            });
+                // 4. Fetch Certificates
+                const certsSnapshot = await getDocs(collection(db, "hm_certs"));
+                const cBody = document.getElementById('certs-table-body');
+                cBody.innerHTML = '';
+                certsSnapshot.forEach(docSnap => {
+                    const c = docSnap.data();
+                    cBody.innerHTML += `<tr><td><strong>${c.title}</strong></td><td>${c.platform}</td>
+                    <td><button class="btn-delete" data-id="${docSnap.id}" data-col="hm_certs">Drop Node</button></td></tr>`;
+                });
 
-            // Render Message Segment Inbox Logger Grid Cards Container
-            const inboxWrapper = document.getElementById('inbox-cards-wrapper');
-            inboxWrapper.innerHTML = mLogs.length === 0 ? '<p style="color:#9ca3af; font-size:0.95rem;">No signals received within transmission memory loops.</p>' : '';
-            mLogs.forEach(m => {
-                inboxWrapper.innerHTML += `
-                    <div class="inbox-card-node">
-                        <div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">
-                            <strong style="color:#fff; font-size:1.05rem;">Identity: ${m.name} [Mail Link: ${m.email}]</strong>
-                            <small style="color:var(--accent-cyan); font-family:monospace;">${m.timestamp}</small>
-                        </div>
-                        <p style="color:#9ca3af; font-size:0.95rem; line-height:1.5;">${m.msg}</p>
-                        <button class="btn-delete" style="margin-top:14px;" onclick="deleteItemNode('hm_inbox', ${m.id})"><i class="fas fa-trash"></i> Wipe Message Node Block</button>
-                     <p style="color:#00d4ff; font-size:0.95rem; line-height:1.5; margin-top:10px;">
-                     <i class="fas fa-phone"></i> ${m.contact}</p>
-                     </div>`;
-            });
+                // 5. Fetch Reviews
+                const reviewsSnapshot = await getDocs(collection(db, "hm_reviews"));
+                const rBody = document.getElementById('reviews-table-body');
+                rBody.innerHTML = '';
+                reviewsSnapshot.forEach(docSnap => {
+                    const r = docSnap.data();
+                    rBody.innerHTML += `<tr><td><strong>${r.name}</strong></td><td>${r.role}</td><td>${r.txt}</td>
+                    <td><button class="btn-delete" data-id="${docSnap.id}" data-col="hm_reviews">Drop Node</button></td></tr>`;
+                });
+
+                // 6. Fetch Social Redirect Mappings
+                const socialsSnapshot = await getDocs(collection(db, "hm_socials"));
+                const sBody = document.getElementById('socials-table-body');
+                sBody.innerHTML = '';
+                
+                // Base structure setup inside console layout logic if collections aren't established yet
+                if (socialsSnapshot.empty) {
+                    const defaultSocials = ["WhatsApp", "GitHub", "LinkedIn", "Instagram", "YouTube", "TikTok"];
+                    for (const p of defaultSocials) {
+                        await setDoc(doc(db, "hm_socials", p.toLowerCase()), { platform: p, url: "#" });
+                    }
+                    // Re-trigger visual setup sync link
+                    renderAllAdminTables();
+                    return;
+                }
+
+                socialsSnapshot.forEach(docSnap => {
+                    const s = docSnap.data();
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td><strong>${s.platform} Base</strong></td>
+                    <td><input type="text" class="social-input-link" data-id="${docSnap.id}" value="${s.url}" style="width:95%;"></td>
+                    <td><span style="color:var(--accent-cyan); font-size:0.8rem; font-weight:700;"><i class="fas fa-check-circle"></i> Integrated Sync</span></td>`;
+                    sBody.appendChild(row);
+                });
+
+                // Re-bind click event listeners on newly produced drop buttons dynamically
+                bindDeleteActions();
+                bindSocialUpdateActions();
+
+            } catch (error) {
+                console.error("Critical Cloud Matrix Synchronization Interrupted:", error);
+            }
         }
 
-        function addSkillNode() {
+        // ====== DATA WRITE HANDLERS INTERFACES SIMULATION ======
+
+        document.getElementById('add-skill-btn').addEventListener('click', async () => {
             const name = document.getElementById('sk-name').value.trim();
             const level = document.getElementById('sk-level').value.trim();
             if(!name || !level) return;
-            const items = JSON.parse(localStorage.getItem('hm_skills') || '[]');
-            items.push({ id: Date.now(), name, level: parseInt(level) });
-            localStorage.setItem('hm_skills', JSON.stringify(items));
-            renderAllAdminTables();
+            await addDoc(collection(db, "hm_skills"), { name, level: parseInt(level) });
             document.getElementById('sk-name').value = ''; document.getElementById('sk-level').value = '';
-        }
+            renderAllAdminTables();
+        });
 
-        function addProjectNode() {
+        document.getElementById('add-project-btn').addEventListener('click', async () => {
             const title = document.getElementById('p-title').value.trim();
             const cat = document.getElementById('p-cat').value.trim();
             const desc = document.getElementById('p-desc').value.trim();
             if(!title || !desc) return;
-            const items = JSON.parse(localStorage.getItem('hm_projects') || '[]');
-            items.push({ id: Date.now(), title, cat: cat || 'General Engineering Node', desc });
-            localStorage.setItem('hm_projects', JSON.stringify(items));
-            renderAllAdminTables();
+            await addDoc(collection(db, "hm_projects"), { title, cat: cat || 'General Engineering Node', desc });
             document.getElementById('p-title').value = ''; document.getElementById('p-cat').value = ''; document.getElementById('p-desc').value = '';
-        }
+            renderAllAdminTables();
+        });
 
-        function addCertNode() {
+        document.getElementById('add-cert-btn').addEventListener('click', async () => {
             const title = document.getElementById('c-title').value.trim();
             const platform = document.getElementById('c-platform').value.trim();
             if(!title || !platform) return;
-            const items = JSON.parse(localStorage.getItem('hm_certs') || '[]');
-            items.push({ id: Date.now(), title, platform });
-            localStorage.setItem('hm_certs', JSON.stringify(items));
-            renderAllAdminTables();
+            await addDoc(collection(db, "hm_certs"), { title, platform });
             document.getElementById('c-title').value = ''; document.getElementById('c-platform').value = '';
-        }
+            renderAllAdminTables();
+        });
 
-        function addReviewNode() {
+        document.getElementById('add-review-btn').addEventListener('click', async () => {
             const name = document.getElementById('r-name').value.trim();
             const role = document.getElementById('r-role').value.trim();
             const txt = document.getElementById('r-txt').value.trim();
             if(!name || !txt) return;
-            const items = JSON.parse(localStorage.getItem('hm_reviews') || '[]');
-            items.push({ id: Date.now(), name, role: role || 'Enterprise Partner Member', txt });
-            localStorage.setItem('hm_reviews', JSON.stringify(items));
-            renderAllAdminTables();
+            await addDoc(collection(db, "hm_reviews"), { name, role: role || 'Enterprise Partner Member', txt });
             document.getElementById('r-name').value = ''; document.getElementById('r-role').value = ''; document.getElementById('r-txt').value = '';
-        }
-
-        function updateSocialLinkAxis(id, newUrl) {
-            const socials = JSON.parse(localStorage.getItem('hm_socials') || '[]');
-            const index = socials.findIndex(s => s.id === id);
-            if(index !== -1) {
-                socials[index].url = newUrl;
-                localStorage.setItem('hm_socials', JSON.stringify(socials));
-            }
-        }
-
-        function deleteItemNode(storageKey, id) {
-            let items = JSON.parse(localStorage.getItem(storageKey) || '[]');
-            items = items.filter(item => item.id !== id);
-            localStorage.setItem(storageKey, JSON.stringify(items));
             renderAllAdminTables();
+        });
+
+        function bindSocialUpdateActions() {
+            document.querySelectorAll('.social-input-link').forEach(input => {
+                input.addEventListener('change', async (e) => {
+                    const docId = input.getAttribute('data-id');
+                    const updatedUrl = e.target.value.trim();
+                    await updateDoc(doc(db, "hm_socials", docId), { url: updatedUrl });
+                });
+            });
+        }
+
+        function bindDeleteActions() {
+            document.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const docId = btn.getAttribute('data-id');
+                    const collectionName = btn.getAttribute('data-col');
+                    if (confirm("Are you sure you want to drop this database object node stream?")) {
+                        await deleteDoc(doc(db, collectionName, docId));
+                        renderAllAdminTables();
+                    }
+                });
+            });
         }
     </script>
 </body>
